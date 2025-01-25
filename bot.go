@@ -5,6 +5,12 @@ import (
     "encoding/json"
     "fmt"
     "net/http"
+	"time"
+)
+
+const (
+	templateID = "AAqFVk8K32QjV"
+	templateVersion = "1.0.3"
 )
 
 // Bot 飞书机器人结构体
@@ -30,7 +36,7 @@ func (b *Bot) SendText(text string) error {
         Text: text,
     }
     
-    msg := Message{
+    msg := message{
         MsgType: "text",
         Content: content,
     }
@@ -43,8 +49,19 @@ func (b *Bot) SendText(text string) error {
     return b.send(jsonData)
 }
 
-func (b *Bot) SendCard(template EventCardTemplate) error {
-	jsonData, err := json.Marshal(template)
+func (b *Bot) SendCard(title, eventLevel, eventMessage string) error {
+	template := eventCardTemplate{
+		Title: title,
+		TemplateID: templateID,
+		TemplateVersion: templateVersion,
+		ServiceName: b.serviceName,
+		PodID: b.podID,
+		EventLevel: eventLevel,
+		EventMessage: eventMessage,
+		EventTime: time.Now().Format("2025-01-01 12:00:00"),
+	}
+	msgCard := newMessageCard(template)
+	jsonData, err := json.Marshal(msgCard)
 	if err != nil {
 		return fmt.Errorf("marshal message failed: %v", err)
 	}
