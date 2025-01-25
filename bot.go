@@ -8,25 +8,24 @@ import (
 	"time"
 )
 
-const (
-	templateID = "AAqFVk8K32QjV"
-	templateVersion = "1.0.3"
-)
-
 // Bot 飞书机器人结构体
 type Bot struct {
     webhook string
 	serviceName string
 	podID string
+	templateID string
+	templateVersion string
 }
 
 
 // NewBot 初始化机器人
-func NewBot(webhook string, serviceName string, podID string) *Bot {
+func NewBot(webhook string, serviceName string, podID string, templateID string, templateVersion string) *Bot {
     return &Bot{
         webhook: webhook,
 		serviceName: serviceName,
 		podID: podID,
+		templateID: templateID,
+		templateVersion: templateVersion,
     }
 }
 
@@ -52,8 +51,8 @@ func (b *Bot) SendText(text string) error {
 func (b *Bot) SendCard(title, eventLevel, eventMessage string) error {
 	template := eventCardTemplate{
 		Title: title,
-		TemplateID: templateID,
-		TemplateVersion: templateVersion,
+		TemplateID: b.templateID,
+		TemplateVersion: b.templateVersion,
 		ServiceName: b.serviceName,
 		PodID: b.podID,
 		EventLevel: eventLevel,
