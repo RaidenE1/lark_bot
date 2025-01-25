@@ -50,7 +50,8 @@ func (b *Bot) SendText(text string) error {
     return b.send(jsonData)
 }
 
-func (b *Bot) SendPanicCard(title, eventLevel, eventMessage string) error {
+func (b *Bot) SendPanicCard(eventLevel, eventMessage string) error {
+	title := "Panic 报警"
 	event := panicEvent{
 		Title: title,
 		ServiceName: b.serviceName,
