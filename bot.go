@@ -6,12 +6,17 @@ import (
     "fmt"
     "net/http"
 	"time"
-	"log"
 )
 
 const (
 	panicTemplateID = "AAqFVk8K32QjV"
 	panicTemplateVersion = "1.0.3"
+)
+
+const (
+	GinHttpPanic = "Gin HTTP Panic"
+	MainPanic = "Main Panic"
+	GoroutinePanic = "Goroutine Panic"
 )
 
 // Bot 飞书机器人结构体
