@@ -74,6 +74,7 @@ func (b *Bot) SendPanicCard(title, eventLevel, eventMessage string) error {
 }
 
 func (b *Bot) send(jsonData []byte) error {
+	log.Println("send message ", string(jsonData))
     resp, err := http.Post(b.webhook, "application/json", bytes.NewBuffer(jsonData))
     if err != nil {
         return fmt.Errorf("send message failed: %v", err)
