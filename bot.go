@@ -8,6 +8,11 @@ import (
 	"time"
 )
 
+const (
+	panicTemplateID = "AAqFVk8K32QjV"
+	panicTemplateVersion = "1.0.3"
+)
+
 // Bot 飞书机器人结构体
 type Bot struct {
     webhook string
@@ -24,8 +29,6 @@ func NewBot(webhook string, serviceName string, podID string, templateID string,
         webhook: webhook,
 		serviceName: serviceName,
 		podID: podID,
-		templateID: templateID,
-		templateVersion: templateVersion,
     }
 }
 
@@ -48,11 +51,11 @@ func (b *Bot) SendText(text string) error {
     return b.send(jsonData)
 }
 
-func (b *Bot) SendCard(title, eventLevel, eventMessage string) error {
+func (b *Bot) SendPanicCard(title, eventLevel, eventMessage string) error {
 	template := eventCardTemplate{
 		Title: title,
-		TemplateID: b.templateID,
-		TemplateVersion: b.templateVersion,
+		TemplateID: panicTemplateID,
+		TemplateVersion: panicTemplateVersion,
 		ServiceName: b.serviceName,
 		PodID: b.podID,
 		EventLevel: eventLevel,
