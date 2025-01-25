@@ -24,7 +24,7 @@ type Bot struct {
 
 
 // NewBot 初始化机器人
-func NewBot(webhook string, serviceName string, podID string, templateID string, templateVersion string) *Bot {
+func NewBot(webhook string, serviceName string, podID string) *Bot {
     return &Bot{
         webhook: webhook,
 		serviceName: serviceName,
