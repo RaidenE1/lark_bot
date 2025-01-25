@@ -57,7 +57,7 @@ func (b *Bot) SendPanicCard(title, eventLevel, eventMessage string) error {
 		PodID: b.podID,
 		EventLevel: eventLevel,
 		EventMessage: eventMessage,
-		EventTime: time.Now().Format("2025-01-01 12:00:00"),
+		EventTime: time.Now().Format("2006-01-02 15:04:05"),
 	}
 	template := eventCardTemplate{
 		TemplateID: panicTemplateID,
@@ -74,13 +74,11 @@ func (b *Bot) SendPanicCard(title, eventLevel, eventMessage string) error {
 }
 
 func (b *Bot) send(jsonData []byte) error {
-	log.Println("send message ", string(jsonData))
     resp, err := http.Post(b.webhook, "application/json", bytes.NewBuffer(jsonData))
     if err != nil {
         return fmt.Errorf("send message failed: %v", err)
     }
     defer resp.Body.Close()
-	log.Printf("send message response: %v", resp)
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("send message failed with status code: %d", resp.StatusCode)
 	}
