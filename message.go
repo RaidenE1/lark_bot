@@ -16,9 +16,13 @@ type card struct {
 }
 
 type eventCardTemplate struct {
-	Title string `json:"title"`
 	TemplateID string `json:"template_id"`
 	TemplateVersion string `json:"template_version"`
+	TemplateVariable interface{} `json:"template_variable"`
+}
+
+type panicEvent struct {
+	Title string `json:"title"`
     ServiceName string `json:"service_name"`
 	PodID string `json:"pod_id"`
 	EventLevel string `json:"event_level"`
@@ -31,10 +35,10 @@ type TextContent struct {
     Text string `json:"text"`
 }
 
-func newMessageCard(eventCardTemplate eventCardTemplate) messageCard {
+func newMessageCard(data eventCardTemplate) messageCard {
 	card := card{
 		Type: "template",
-		Data: eventCardTemplate,
+		Data: data,
 	}
 	msg := messageCard{
 		MsgType: "message_card",

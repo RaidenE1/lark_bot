@@ -6,6 +6,7 @@ import (
     "fmt"
     "net/http"
 	"time"
+	"log"
 )
 
 const (
@@ -18,8 +19,6 @@ type Bot struct {
     webhook string
 	serviceName string
 	podID string
-	templateID string
-	templateVersion string
 }
 
 
@@ -52,15 +51,18 @@ func (b *Bot) SendText(text string) error {
 }
 
 func (b *Bot) SendPanicCard(title, eventLevel, eventMessage string) error {
-	template := eventCardTemplate{
+	event := panicEvent{
 		Title: title,
-		TemplateID: panicTemplateID,
-		TemplateVersion: panicTemplateVersion,
 		ServiceName: b.serviceName,
 		PodID: b.podID,
 		EventLevel: eventLevel,
 		EventMessage: eventMessage,
 		EventTime: time.Now().Format("2025-01-01 12:00:00"),
+	}
+	template := eventCardTemplate{
+		TemplateID: panicTemplateID,
+		TemplateVersion: panicTemplateVersion,
+		TemplateVariable: event,
 	}
 	msgCard := newMessageCard(template)
 	jsonData, err := json.Marshal(msgCard)
@@ -77,7 +79,7 @@ func (b *Bot) send(jsonData []byte) error {
         return fmt.Errorf("send message failed: %v", err)
     }
     defer resp.Body.Close()
-
+	log.Printf("send message response: %v", resp)
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("send message failed with status code: %d", resp.StatusCode)
 	}
