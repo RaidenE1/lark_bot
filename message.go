@@ -41,7 +41,7 @@ func newMessageCard(data eventCardTemplate) messageCard {
 		Data: data,
 	}
 	msg := messageCard{
-		MsgType: "message_card",
+		MsgType: "interactive",
 		Card: card,
 	}
 	return msg
