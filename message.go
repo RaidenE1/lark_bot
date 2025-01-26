@@ -21,16 +21,6 @@ type eventCardTemplate struct {
 	TemplateVariable interface{} `json:"template_variable"`
 }
 
-type panicEvent struct {
-	Title string `json:"title"`
-    ServiceName string `json:"service_name"`
-	PodID string `json:"pod_id"`
-	EventLevel string `json:"event_level"`
-	EventMessage string `json:"event_message"`
-	EventTrace string `json:"event_trace"`
-	EventTime string `json:"event_time"`
-}
-
 // TextContent 文本消息内容
 type TextContent struct {
     Text string `json:"text"`

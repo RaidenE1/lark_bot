@@ -5,7 +5,6 @@ import (
     "encoding/json"
     "fmt"
     "net/http"
-	"time"
 )
 
 const (
@@ -49,17 +48,7 @@ func (b *Bot) SendText(text string) error {
     return b.send(jsonData)
 }
 
-func (b *Bot) SendPanicCard(eventLevel, eventMessage, eventTrace, templateID, templateVersion string) error {
-	title := "Panic 报警"
-	event := panicEvent{
-		Title: title,
-		ServiceName: b.serviceName,
-		PodID: b.podID,
-		EventLevel: eventLevel,
-		EventMessage: eventMessage,
-		EventTrace: eventTrace,
-		EventTime: time.Now().Format("2006-01-02 15:04:05"),
-	}
+func (b *Bot) SendMessageCard(templateID, templateVersion string, event interface{}) error {
 	template := eventCardTemplate{
 		TemplateID: templateID,
 		TemplateVersion: templateVersion,
