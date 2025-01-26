@@ -27,6 +27,7 @@ type panicEvent struct {
 	PodID string `json:"pod_id"`
 	EventLevel string `json:"event_level"`
 	EventMessage string `json:"event_message"`
+	EventTrace string `json:"event_trace"`
 	EventTime string `json:"event_time"`
 }
 

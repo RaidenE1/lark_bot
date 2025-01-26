@@ -9,12 +9,6 @@ import (
 )
 
 const (
-	panicTemplateID = "AAqFVk8K32QjV"
-	panicTemplateVersion = "1.0.3"
-)
-
-const (
-	GinHttpPanic = "Gin HTTP Panic"
 	MainPanic = "Main Panic"
 	GoroutinePanic = "Goroutine Panic"
 )
@@ -55,7 +49,7 @@ func (b *Bot) SendText(text string) error {
     return b.send(jsonData)
 }
 
-func (b *Bot) SendPanicCard(eventLevel, eventMessage string) error {
+func (b *Bot) SendPanicCard(eventLevel, eventMessage, eventTrace, templateID, templateVersion string) error {
 	title := "Panic 报警"
 	event := panicEvent{
 		Title: title,
@@ -63,11 +57,12 @@ func (b *Bot) SendPanicCard(eventLevel, eventMessage string) error {
 		PodID: b.podID,
 		EventLevel: eventLevel,
 		EventMessage: eventMessage,
+		EventTrace: eventTrace,
 		EventTime: time.Now().Format("2006-01-02 15:04:05"),
 	}
 	template := eventCardTemplate{
-		TemplateID: panicTemplateID,
-		TemplateVersion: panicTemplateVersion,
+		TemplateID: templateID,
+		TemplateVersion: templateVersion,
 		TemplateVariable: event,
 	}
 	msgCard := newMessageCard(template)
